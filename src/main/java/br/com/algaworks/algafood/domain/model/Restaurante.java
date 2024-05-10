@@ -1,11 +1,13 @@
 package br.com.algaworks.algafood.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -28,6 +30,13 @@ public class Restaurante {
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
+
+    @JsonIgnore
+    @Embedded
+    private Endereco endereco;
+
+    private LocalDateTime dataCadastro;
+    private LocalDateTime dataAtualização;
 
     @Override
     public boolean equals(Object o) {
