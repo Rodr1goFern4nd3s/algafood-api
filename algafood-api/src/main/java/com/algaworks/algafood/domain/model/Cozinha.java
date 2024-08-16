@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "tab_cozinhas")
+@Table(name = "tb_cozinhas")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cozinha {

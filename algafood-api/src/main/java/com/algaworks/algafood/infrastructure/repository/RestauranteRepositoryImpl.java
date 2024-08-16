@@ -18,7 +18,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
 
     @Override
     public List<Restaurante> listar() {
-        return manager.createQuery("from Restaurante", Restaurante.class).getResultList();
+        return manager.createQuery("from tb_restaurantes", Restaurante.class).getResultList();
     }
 
     @Override
@@ -32,6 +32,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
         return manager.merge(restaurante);
     }
 
+    @Transactional
     @Override
     public void remover(Long id) {
         Restaurante restaurante = buscar(id);

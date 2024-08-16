@@ -26,12 +26,6 @@ public class CozinhaController {
         return cozinhaRepository.listar();
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Cozinha adicionar(@RequestBody Cozinha cozinha) {
-        return cadastroCozinhaService.salvar(cozinha);
-    }
-
     @GetMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
         Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
@@ -41,6 +35,12 @@ public class CozinhaController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cozinha adicionar(@RequestBody Cozinha cozinha) {
+        return cadastroCozinhaService.salvar(cozinha);
     }
 
     @PutMapping("/{cozinhaId}")

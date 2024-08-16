@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "tab_restaurantes")
+@Table(name = "tb_restaurantes")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restaurante {
