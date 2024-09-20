@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@Table(name = "tb_permissoes")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Permissao {
 

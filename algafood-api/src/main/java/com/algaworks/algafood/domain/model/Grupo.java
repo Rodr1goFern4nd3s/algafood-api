@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_grupos")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Grupo {

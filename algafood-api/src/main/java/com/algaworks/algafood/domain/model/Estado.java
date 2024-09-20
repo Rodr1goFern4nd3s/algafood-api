@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "tb_estados")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Estado {
@@ -14,5 +13,7 @@ public class Estado {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private  String nome;
 }

@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@Table(name = "tab_formaPagamentos")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FormaPagamento {
 
