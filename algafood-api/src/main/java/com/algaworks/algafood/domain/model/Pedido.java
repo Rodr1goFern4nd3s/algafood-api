@@ -1,10 +1,11 @@
 package com.algaworks.algafood.domain.model;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,13 +21,10 @@ public class Pedido {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false)
     private BigDecimal subTotal;
 
-    @Column(nullable = false)
     private BigDecimal taxaFrete;
 
-    @Column(nullable = false)
     private BigDecimal valorTotal;
 
     @CreationTimestamp
@@ -40,11 +38,11 @@ public class Pedido {
     @ManyToOne
     private Restaurante restaurante;
 
+    @ManyToOne
     @JoinColumn(name = "usuario_cliente_id", nullable = false)
     private Usuario cliente;
 
-    //@Column(nullable = false)
-    //private StatuPedido status;
+    private StatusPedido status;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens = new ArrayList<>();

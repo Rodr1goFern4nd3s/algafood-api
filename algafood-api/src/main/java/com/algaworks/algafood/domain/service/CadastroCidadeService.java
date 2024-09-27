@@ -46,4 +46,8 @@ public class CadastroCidadeService {
                     String.format("Cidade de código %d não pode ser removida, pois está em uso", cidadeId));
         }
     }
+
+    /*public Cidade buscarOuFalhar(Long cidadeId) {
+
+    }*/
 }
