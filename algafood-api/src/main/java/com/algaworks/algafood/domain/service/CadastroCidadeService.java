@@ -16,13 +16,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CadastroCidadeService {
 
-    private static final String MSG_CIDADE_NAO_ENCONTRADA = "Não existe um cadastro de cidade com código %d";
-    private static final String MSG_CIDADE_EM_USO = "Cidade de código %d não pode ser removida, pois está em uso";
-    private static final String MSG_ESTADO_NAO_ENCONTRADO = "Não existe um cadastro de estado com código %d";
-
     private CidadeRepository cidadeRepository;
-    private EstadoRepository estadoRepository;
     private CadastroEstadoService cadastroEstadoService;
+
+    private static final String MSG_CIDADE_EM_USO = "Cidade de código %d não pode ser removida, pois está em uso";
 
     public Cidade salvar(Cidade cidade) {
 
@@ -47,7 +44,7 @@ public class CadastroCidadeService {
 
     public void excluir(Long cidadeId) {
         try {
-            cidadeRepository.existsById(cidadeId);
+            cidadeRepository.deleteById(cidadeId);
 
         } catch (EmptyResultDataAccessException e) {
             throw new CidadeNaoEncontradaException(cidadeId);
