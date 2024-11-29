@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 @Builder
 public class ProblemDetails {
 
+    /*@Builder
+    O Builder do lombok, ajuda agente a instanciar um problema
+    usando um padrão builder chamando nomeClasse.builder().title(passo o valor).status(passo o valor).build();
+     */
+
     private Integer status;
     private String type;
     private String title;
