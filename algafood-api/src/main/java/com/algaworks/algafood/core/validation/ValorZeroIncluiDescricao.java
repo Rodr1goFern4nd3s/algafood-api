@@ -9,15 +9,17 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
+@Constraint(validatedBy = { ValorZeroIncluiDescricaoValidator.class })
 public @interface ValorZeroIncluiDescricao {
 
-    String message() default "{TaxaFrete.invalida}";
+    //String message() default "{TaxaFrete.invalida}";
+    String message() default "descrição obrigatória inválida";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
+    //Essas propriedades estão no parâmetro da anotação.
     String valorField();
     String descricaoField();
     String descricaoObrigatoria();
