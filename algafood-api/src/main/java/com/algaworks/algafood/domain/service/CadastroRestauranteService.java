@@ -12,18 +12,20 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
 public class CadastroRestauranteService {
 
-    private static final String MSG_COZINHA_NAO_ENCONTRADA = "Não existe um cadastro de cozinha com código %d";
+    //private static final String MSG_COZINHA_NAO_ENCONTRADA = "Não existe um cadastro de cozinha com código %d";
     private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removido, pois está em uso";
 
     private RestauranteRepository restauranteRepository;
-    private CozinhaRepository cozinhaRepository;
+    //private CozinhaRepository cozinhaRepository;
     private CadastroCozinhaService cadastroCozinhaService;
 
+    @Transactional
     public Restaurante salvar(Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
         Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
@@ -42,6 +44,7 @@ public class CadastroRestauranteService {
         return restauranteRepository.save(restaurante);*/
     }
 
+    @Transactional
     public void excluir(Long restauranteId) {
         try {
             restauranteRepository.existsById(restauranteId);

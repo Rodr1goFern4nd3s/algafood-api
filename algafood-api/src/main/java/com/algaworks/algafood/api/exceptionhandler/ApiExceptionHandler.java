@@ -219,8 +219,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-                                                             HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         if (body == null) {
             body = Problem.builder()
@@ -241,8 +240,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 
-    private Problem.ProblemBuilder createProblemBuilder(HttpStatus status,
-                                                        ProblemType problemType, String detail) {
+    private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
 
         return Problem.builder()
                 .timestamp(LocalDateTime.now())
@@ -254,7 +252,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private String joinPath(List<Reference> references) {
         return references.stream()
-                .map(ref -> ref.getFieldName())
+                .map(Reference::getFieldName)
                 .collect(Collectors.joining("."));
     }
 }

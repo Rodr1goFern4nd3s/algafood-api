@@ -71,7 +71,18 @@ public class RestauranteController {
     @PutMapping("/{restauranteId}")
     public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody @Valid Restaurante restaurante) {
 
-        Restaurante restauranteAtual = cadastroRestauranteService.buscarOuFalhar(restauranteId);
+        try {
+            Restaurante restauranteAtual = cadastroRestauranteService.buscarOuFalhar(restauranteId);
+
+            BeanUtils.copyProperties(restaurante, restauranteAtual,
+                    "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
+
+            return cadastroRestauranteService.salvar(restauranteAtual);
+        } catch (CozinhaNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
+
+        /*Restaurante restauranteAtual = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
         BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 
@@ -79,7 +90,7 @@ public class RestauranteController {
             return cadastroRestauranteService.salvar(restauranteAtual);
         } catch (CozinhaNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
-        }
+        }*/
 
         /*try{
             Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
