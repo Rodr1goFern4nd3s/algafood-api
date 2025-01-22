@@ -17,16 +17,7 @@ public class RestauranteModelOutput {
 
 
     private Long id;
-
-    @NotBlank
     private String nome;
-
-    @NotNull
-    @PositiveOrZero
     private BigDecimal taxaFrete;
-
-    @Valid
-    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-    @NotNull
     private CozinhaModelOutput cozinha;
 }

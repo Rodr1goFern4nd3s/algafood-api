@@ -1,5 +1,9 @@
 package com.algaworks.algafood.api.controller;
 
+import com.algaworks.algafood.api.assembler.RestauranteInputDesassembler;
+import com.algaworks.algafood.api.assembler.RestauranteModelAssembler;
+import com.algaworks.algafood.api.representationModelDTO.input.RestauranteModelInput;
+import com.algaworks.algafood.api.representationModelDTO.output.RestauranteModelOutput;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -21,17 +25,20 @@ public class RestauranteController {
 
     private CadastroRestauranteService cadastroRestauranteService;
     private RestauranteRepository restauranteRepository;
+    private RestauranteModelAssembler restauranteModelAssembler;
+    private RestauranteInputDesassembler restauranteInputDesassembler;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Restaurante> listar() {
-        return restauranteRepository.findAll();
+    public List<RestauranteModelOutput> listar() {
+        return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
     }
 
     @GetMapping("/{restauranteId}")
-    public Restaurante buscar(@PathVariable Long restauranteId) {
+    public RestauranteModelOutput buscar(@PathVariable Long restauranteId) {
+        Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
-        return cadastroRestauranteService.buscarOuFalhar(restauranteId);
+        return restauranteModelAssembler.toModel(restaurante);
 
         /*Optional<Restaurante> restaurante = restauranteRepository.findById(restauranteId);
 
@@ -60,24 +67,27 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {
+    public RestauranteModelOutput adicionar(@RequestBody @Valid RestauranteModelInput restauranteModelInput) {
         try {
-            return cadastroRestauranteService.salvar(restaurante);
+            Restaurante restaurante = restauranteInputDesassembler.toDomainObject(restauranteModelInput);
+            return restauranteModelAssembler.toModel(cadastroRestauranteService.salvar(restaurante));
         } catch (CozinhaNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
 
     @PutMapping("/{restauranteId}")
-    public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody @Valid Restaurante restaurante) {
+    public RestauranteModelOutput atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteModelInput restauranteModelInput) {
 
         try {
+            Restaurante restaurante = restauranteInputDesassembler.toDomainObject(restauranteModelInput);
+
             Restaurante restauranteAtual = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
             BeanUtils.copyProperties(restaurante, restauranteAtual,
                     "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 
-            return cadastroRestauranteService.salvar(restauranteAtual);
+            return restauranteModelAssembler.toModel(cadastroRestauranteService.salvar(restauranteAtual));
         } catch (CozinhaNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
