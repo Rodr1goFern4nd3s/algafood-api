@@ -1,4 +1,4 @@
-package com.algaworks.algafood.core.jackson;
+/*package com.algaworks.algafood.core.jackson;
 
 import com.algaworks.algafood.api.mixin.CidadeMixin;
 import com.algaworks.algafood.api.mixin.CozinhaMixin;
@@ -17,9 +17,9 @@ public class JacksonMixinModule extends SimpleModule {
     - Nessa classe(Module) vamos registrar os mixins que estamos usando, também registrar e desregistrar sereleziador e desserializador jackson
     */
 
-    public JacksonMixinModule() {
+    /*public JacksonMixinModule() {
         setMixInAnnotation(Restaurante.class, RestauranteMixin.class);
         setMixInAnnotation(Cidade.class, CidadeMixin.class);
         setMixInAnnotation(Cozinha.class, CozinhaMixin.class); //Exemplo ligando outros mixins
     }
-}
+}*/

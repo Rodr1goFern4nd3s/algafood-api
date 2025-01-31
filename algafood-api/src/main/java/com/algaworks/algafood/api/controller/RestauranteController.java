@@ -2,15 +2,14 @@ package com.algaworks.algafood.api.controller;
 
 import com.algaworks.algafood.api.assembler.RestauranteInputDesassembler;
 import com.algaworks.algafood.api.assembler.RestauranteModelAssembler;
-import com.algaworks.algafood.api.representationModelDTO.input.RestauranteModelInput;
-import com.algaworks.algafood.api.representationModelDTO.output.RestauranteModelOutput;
+import com.algaworks.algafood.api.representationModelDTO.input.restaurante.RestauranteModelInput;
+import com.algaworks.algafood.api.representationModelDTO.output.restaurante.RestauranteModelOutput;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,12 +79,15 @@ public class RestauranteController {
     public RestauranteModelOutput atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteModelInput restauranteModelInput) {
 
         try {
-            Restaurante restaurante = restauranteInputDesassembler.toDomainObject(restauranteModelInput);
+            //Restaurante restaurante = restauranteInputDesassembler.toDomainObject(restauranteModelInput);
 
             Restaurante restauranteAtual = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
+            restauranteInputDesassembler.copyToDomainObject(restauranteModelInput, restauranteAtual);
+
+            /*Este procedimento sendo feito na linha acima!
             BeanUtils.copyProperties(restaurante, restauranteAtual,
-                    "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
+                    "id", "formasPagamento", "endereco", "dataCadastro", "produtos");*/
 
             return restauranteModelAssembler.toModel(cadastroRestauranteService.salvar(restauranteAtual));
         } catch (CozinhaNaoEncontradaException e) {

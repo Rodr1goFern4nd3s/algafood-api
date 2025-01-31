@@ -1,7 +1,6 @@
 package com.algaworks.algafood.api.assembler;
 
-import com.algaworks.algafood.api.representationModelDTO.input.RestauranteModelInput;
-import com.algaworks.algafood.api.representationModelDTO.output.RestauranteModelOutput;
+import com.algaworks.algafood.api.representationModelDTO.input.restaurante.RestauranteModelInput;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import lombok.AllArgsConstructor;
@@ -33,5 +32,17 @@ public class RestauranteInputDesassembler {
 
         //Usando a library ModelMapper
         return modelMapper.map(restauranteModelInput, Restaurante.class);
+    }
+
+    public void copyToDomainObject(RestauranteModelInput restauranteModelInput, Restaurante restaurante) {
+        /*A idéia aqui é de converter um DTO input para um restaurante, passando um input e a entidade(destino) onde queremos atribuir
+        O ModelMapper não irá instanciar uma nova entidade(restaurante), ele irá usá-lo copiar as propriedades de um objeto para o outro
+        Use-o lá no método controller atualizar
+         */
+
+        //Para evitar org.hibernate.HibernateException: identifier of an instance of com.algaworks.algafood.domain.model.Cozinha was altered from 1 to 2
+        restaurante.setCozinha(new Cozinha());
+
+        modelMapper.map(restauranteModelInput, restaurante);
     }
 }

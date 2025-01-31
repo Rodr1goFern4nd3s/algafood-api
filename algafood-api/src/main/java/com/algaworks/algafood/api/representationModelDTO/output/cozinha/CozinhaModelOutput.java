@@ -1,4 +1,4 @@
-package com.algaworks.algafood.api.representationModelDTO.output;
+package com.algaworks.algafood.api.representationModelDTO.output.cozinha;
 
 import lombok.Data;
 

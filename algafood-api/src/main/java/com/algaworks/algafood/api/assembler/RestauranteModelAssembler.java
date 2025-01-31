@@ -1,7 +1,6 @@
 package com.algaworks.algafood.api.assembler;
 
-import com.algaworks.algafood.api.representationModelDTO.output.CozinhaModelOutput;
-import com.algaworks.algafood.api.representationModelDTO.output.RestauranteModelOutput;
+import com.algaworks.algafood.api.representationModelDTO.output.restaurante.RestauranteModelOutput;
 import com.algaworks.algafood.domain.model.Restaurante;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -7,7 +7,7 @@ public enum ProblemType {
 
     //Essa enum vai nos ajudar na criação dos ProblemDetails
 
-    DADOS_INVALIDOS("/dados-invalidos", "Daods inválidos"),
+    DADOS_INVALIDOS("/dados-invalidos", "Dados inválidos"),
     ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema"),
     MENSAGEM_IMCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensível"),
     RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado"),

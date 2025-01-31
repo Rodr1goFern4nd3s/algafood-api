@@ -11,4 +11,6 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
+    //Registramos um bean do Spring para fazer a injeção de ModelMapper
 }

@@ -1,7 +1,13 @@
 package com.algaworks.algafood.api.controller;
 
+import com.algaworks.algafood.api.assembler.CozinhaInputDesassembler;
+import com.algaworks.algafood.api.assembler.CozinhaModelAssembler;
+import com.algaworks.algafood.api.representationModelDTO.input.cozinha.CozinhaModelInput;
+import com.algaworks.algafood.api.representationModelDTO.output.cozinha.CozinhaModelOutput;
+import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
@@ -22,15 +28,21 @@ public class CozinhaController {
 
     private CozinhaRepository cozinhaRepository;
     private CadastroCozinhaService cadastroCozinhaService;
+    private CozinhaModelAssembler cozinhaModelAssembler;
+    private CozinhaInputDesassembler cozinhaInputDesassembler;
 
     @GetMapping
-    public List<Cozinha> listar() {
-        return cozinhaRepository.findAll();
+    public List<CozinhaModelOutput> listar() {
+        return cozinhaModelAssembler.toCollectionModel(cozinhaRepository.findAll());
+        //return cozinhaRepository.findAll();
     }
 
     @GetMapping("/{cozinhaId}")
-    public Cozinha buscar(@PathVariable Long cozinhaId) {
-        return cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+    public CozinhaModelOutput buscar(@PathVariable Long cozinhaId) {
+        Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+        return cozinhaModelAssembler.toModel(cozinha);
+
+        //return cadastroCozinhaService.buscarOuFalhar(cozinhaId);
 
         /*Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
 
@@ -42,24 +54,36 @@ public class CozinhaController {
     }
 
     @GetMapping("/unica-por-nome")
-    public Optional<Cozinha> buscarPorNomeExato(String nomeCozinha) {
-        return cozinhaRepository.findPesquisaExataByNome(nomeCozinha);
+    public CozinhaModelOutput buscarPorNomeExato(String nomeCozinha) {
+        Optional<Cozinha> cozinha = cozinhaRepository.findPesquisaExataByNome(nomeCozinha);
+        return cozinhaModelAssembler.toModel(cozinha.get());
+
+        //return cozinhaRepository.findPesquisaExataByNome(nomeCozinha);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha) {
-        return cadastroCozinhaService.salvar(cozinha);
+    public CozinhaModelOutput adicionar(@RequestBody @Valid CozinhaModelInput cozinhaModelInput) {
+
+        Cozinha cozinha = cozinhaInputDesassembler.toDomainObject(cozinhaModelInput);
+        return cozinhaModelAssembler.toModel(cadastroCozinhaService.salvar(cozinha));
+        //return cadastroCozinhaService.salvar(cozinha);
     }
 
     @PutMapping("/{cozinhaId}")
-    public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha) {
+    public CozinhaModelOutput atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid CozinhaModelInput cozinhaModelInput) {
 
-        Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+            Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+
+            cozinhaInputDesassembler.copyToDomainObject(cozinhaModelInput, cozinhaAtual);
+
+            return cozinhaModelAssembler.toModel(cadastroCozinhaService.salvar(cozinhaAtual));
+
+        /*Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
 
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id"); //Quando vai atualizar ele vai pegar os novos dados(cozinha) e copiar pra instancia(cozinhaAtual)
 
-        return cadastroCozinhaService.salvar(cozinhaAtual);
+        return cadastroCozinhaService.salvar(cozinhaAtual);*/
     }
 
     /*@DeleteMapping("/{cozinhaId}")
