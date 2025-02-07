@@ -121,6 +121,30 @@ public class RestauranteController {
         }*/
     }
 
+    @PutMapping("/{restauranteId}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativar(@PathVariable Long restauranteId) {
+        cadastroRestauranteService.ativar(restauranteId);
+
+        /*Por que fazer um PUT aqui?
+        Porque se fazemos várias requisições idênticas em sequência não haverá
+        efeito colateral, são chamadas indenpotentes, ao contrário do POST que
+        terá efeito colateral
+         */
+    }
+
+    @DeleteMapping("/{restauranteId}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativar(@PathVariable Long restauranteId) {
+        cadastroRestauranteService.inativar(restauranteId);
+
+        /*Por que fazer um DELETE aqui?
+        Porque se fazemos várias requisições idênticas em sequência não haverá
+        efeito colateral, são chamadas indenpotentes, ao contrário do POST que
+        terá efeito colateral
+         */
+    }
+
     @DeleteMapping("/{restauranteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long restauranteId) {

@@ -56,6 +56,27 @@ public class CadastroRestauranteService {
         }
     }
 
+    @Transactional
+    public void ativar(Long restauranteId) {
+        Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+
+        //restauranteAtual.setAtivo(true);
+        restauranteAtual.ativar(); //Melhora a redação do código
+
+        //Aqui depois, não preciso chamar o método restauranteRepository.save(restauranteAtual);
+        /*
+        Quando buscarOuFalhar pega no repo e retorna para nós, a instância do restaurante fica num estado gerenciado pelo contexto
+        de persistência do JPA, qualquer modificação feita em restauranteAtual, ela será sincronizada(update lá na table) depois com o BD.
+         */
+    }
+
+    @Transactional
+    public void inativar(Long restauranteId) {
+        Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+        //restauranteAtual.setAtivo(false);
+        restauranteAtual.inativar();
+    }
+
     public Restaurante buscarOuFalhar(Long restauranteId) {
         return restauranteRepository.findById(restauranteId).orElseThrow(() ->
                 new RestauranteNaoEncontradoException(restauranteId));
