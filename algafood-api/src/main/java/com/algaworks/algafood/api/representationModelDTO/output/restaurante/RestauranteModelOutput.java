@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.representationModelDTO.output.restaurante;
 
 import com.algaworks.algafood.api.representationModelDTO.output.cozinha.CozinhaModelOutput;
+import com.algaworks.algafood.api.representationModelDTO.output.endereco.EnderecoModelOutput;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -13,4 +14,5 @@ public class RestauranteModelOutput {
     private BigDecimal taxaFrete;
     private CozinhaModelOutput cozinha;
     private Boolean ativo;
+    private EnderecoModelOutput endereco;
 }

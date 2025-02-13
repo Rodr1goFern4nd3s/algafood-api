@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.representationModelDTO.input.restaurante;
 
+import com.algaworks.algafood.api.representationModelDTO.input.endereco.EnderecoModelInput;
 import com.algaworks.algafood.api.representationModelDTO.input.restaurante.CozinhaIdInput;
 import lombok.Data;
 
@@ -22,4 +23,8 @@ public class RestauranteModelInput {
     @Valid
     @NotNull
     private CozinhaIdInput cozinha;
+
+    @Valid
+    @NotNull
+    private EnderecoModelInput endereco;
 }

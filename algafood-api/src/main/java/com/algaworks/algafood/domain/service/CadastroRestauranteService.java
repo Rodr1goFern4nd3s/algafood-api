@@ -24,12 +24,18 @@ public class CadastroRestauranteService {
     private RestauranteRepository restauranteRepository;
     //private CozinhaRepository cozinhaRepository;
     private CadastroCozinhaService cadastroCozinhaService;
+    private CadastroCidadeService cadastroCidadeService;
 
     @Transactional
     public Restaurante salvar(Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
+        Long cidadeId = restaurante.getEndereco().getCidade().getId();
+
         Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+        Cidade cidade = cadastroCidadeService.buscarOuFalhar(cidadeId);
+
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
 
         return restauranteRepository.save(restaurante);
 
