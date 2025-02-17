@@ -37,6 +37,7 @@ public class EstadoController {
     }
 
     @GetMapping("/{estadoId}")
+    @ResponseStatus(HttpStatus.OK)
     public EstadoModelOutput buscar(@PathVariable Long estadoId) {
 
         Estado estado = cadastroEstadoService.buscarOuFalhar(estadoId);

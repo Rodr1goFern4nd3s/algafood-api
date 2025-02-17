@@ -53,7 +53,8 @@ public class CadastroRestauranteService {
     @Transactional
     public void excluir(Long restauranteId) {
         try {
-            restauranteRepository.existsById(restauranteId);
+            restauranteRepository.deleteById(restauranteId);
+            restauranteRepository.flush();
         } catch (EmptyResultDataAccessException e) {
             throw new RestauranteNaoEncontradoException(restauranteId);
         } catch (DataIntegrityViolationException e) {
