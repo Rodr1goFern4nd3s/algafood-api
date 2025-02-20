@@ -35,9 +35,10 @@ public class RestauranteController {
     }
 
     @GetMapping("/{restauranteId}")
+    @ResponseStatus(HttpStatus.OK)
     public RestauranteModelOutput buscar(@PathVariable Long restauranteId) {
-        Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
 
+        Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
         return restauranteModelAssembler.toModel(restaurante);
 
         /*Optional<Restaurante> restaurante = restauranteRepository.findById(restauranteId);
