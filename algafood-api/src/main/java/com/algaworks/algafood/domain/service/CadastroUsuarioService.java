@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class CadastroUsuarioService {
@@ -16,6 +18,13 @@ public class CadastroUsuarioService {
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
+
+        Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail()); //Dentro do optional, ou está nulo, ou tem um usuário existente
+
+        if(usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
+            throw new NegocioException(String.format("Já existe um usuário cadastrado com o e-mail %s", usuario.getEmail()));
+        }
+
         return usuarioRepository.save(usuario);
     }
 

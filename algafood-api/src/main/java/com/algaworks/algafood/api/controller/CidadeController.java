@@ -11,15 +11,11 @@ import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/cidades")
@@ -34,6 +30,7 @@ public class CidadeController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CidadeModelOutput> listar() {
+        List<Cidade> todasCidades = cidadeRepository.findAll();
         return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
         // return cidadeRepository.findAll();
     }
