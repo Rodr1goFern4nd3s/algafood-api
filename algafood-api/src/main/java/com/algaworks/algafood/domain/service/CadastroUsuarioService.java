@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 @Service
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class CadastroUsuarioService {
 
     private UsuarioRepository usuarioRepository;
+    private EntityManager entityManager; //Evitando a sincronização, tirando a instância para que ela pare de ser gerenciada pelo contexto de persistência (12.11)
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
+        entityManager.detach(usuario); //A JPA ira parar de gerenciar esse usuário e não haverá sincronização com BD
 
         Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail()); //Dentro do optional, ou está nulo, ou tem um usuário existente
 
