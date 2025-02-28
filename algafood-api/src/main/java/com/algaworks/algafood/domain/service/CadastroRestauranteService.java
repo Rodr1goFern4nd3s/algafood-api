@@ -87,6 +87,18 @@ public class CadastroRestauranteService {
     }
 
     @Transactional
+    public void abrir(Long restauranteId) {
+        Restaurante restaurante = buscarOuFalhar(restauranteId);
+        restaurante.abrir();
+    }
+
+    @Transactional
+    public void fechar(Long restauranteId) {
+        Restaurante restaurante = buscarOuFalhar(restauranteId);
+        restaurante.fechar();
+    }
+
+    @Transactional
     public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
         Restaurante restaurante = buscarOuFalhar(restauranteId);
         FormaPagamento formaPagamento = cadastroFormaPagamentoService.buscarOuFalhar(formaPagamentoId);
