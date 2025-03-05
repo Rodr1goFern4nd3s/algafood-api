@@ -31,7 +31,7 @@ public class CidadeController {
     @ResponseStatus(HttpStatus.OK)
     public List<CidadeModelOutput> listar() {
         List<Cidade> todasCidades = cidadeRepository.findAll();
-        return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
+        return cidadeModelAssembler.toCollectionModel(todasCidades);
         // return cidadeRepository.findAll();
     }
 
