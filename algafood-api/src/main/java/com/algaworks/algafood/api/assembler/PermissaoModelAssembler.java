@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class PermissaoModelAssembler {
         return modelMapper.map(permissao, PermissaoModelOutput.class);
     }
 
-    public List<PermissaoModelOutput> toCollectionModel(List<Permissao> permissoes) {
+    public List<PermissaoModelOutput> toCollectionModel(Collection<Permissao> permissoes) {
         return permissoes.stream().map(this::toModel).collect(Collectors.toList());
     }
 }
