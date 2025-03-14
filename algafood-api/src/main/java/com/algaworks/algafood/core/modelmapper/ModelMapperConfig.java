@@ -1,7 +1,9 @@
 package com.algaworks.algafood.core.modelmapper;
 
+import com.algaworks.algafood.api.representationModelDTO.input.intemPedido.ItemPedidoInput;
 import com.algaworks.algafood.api.representationModelDTO.output.endereco.EnderecoModelOutput;
 import com.algaworks.algafood.domain.model.Endereco;
+import com.algaworks.algafood.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,9 @@ public class ModelMapperConfig {
         /*
         Adicionamos esse mapeamento para a propriedade que chamamos de estado em CidadeResumoModel private String estado;
          */
+
+        modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+                .addMappings(mapper -> mapper.skip(ItemPedido::setId));
 
         return modelMapper;
     }
