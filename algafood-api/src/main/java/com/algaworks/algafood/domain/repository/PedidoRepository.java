@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
-    @Query("from pedido p join fetch p.cliente join fetch p.restaurante r join fetch r.cozinha")
+    @Query("from Pedido p join fetch p.cliente join fetch p.restaurante r join fetch r.cozinha")
     List<Pedido> findAll(); //Aula 12.20
 }

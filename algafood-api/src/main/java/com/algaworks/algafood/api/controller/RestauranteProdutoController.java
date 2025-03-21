@@ -28,9 +28,19 @@ public class RestauranteProdutoController {
     private ProdutoRepository produtoRepository;
 
     @GetMapping
-    public List<ProdutoModelOutput> listar(@PathVariable Long restauranteId) {
+    public List<ProdutoModelOutput> listar(@PathVariable Long restauranteId, @RequestParam(required = false) boolean incluirInativos) {
+        //Não esqueça de passar o parâmetro(incluirInativos com o value "true ou false") no Postman
+
         Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
-        List<Produto> todosProdutos = produtoRepository.findByRestaurante(restaurante);
+
+        List<Produto> todosProdutos = null;
+
+        if(incluirInativos) {
+            todosProdutos = produtoRepository.findTodosByRestaurante(restaurante); //true
+        } else {
+            todosProdutos = produtoRepository.findAtivosByRestaurante(restaurante); //false
+        }
+
         return produtoModelAssembler.toCollectionModel(todosProdutos);
     }
 
