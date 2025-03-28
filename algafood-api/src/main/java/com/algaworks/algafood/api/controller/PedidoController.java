@@ -11,10 +11,12 @@ import com.algaworks.algafood.api.representationModelDTO.output.pedido.PedidoRes
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
+import com.algaworks.algafood.domain.infrastructure.repository.PedidoSpecs;
 import com.algaworks.algafood.domain.model.Endereco;
 import com.algaworks.algafood.domain.model.Pedido;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.PedidoRepository;
+import com.algaworks.algafood.domain.repository.filter.PedidoFilter;
 import com.algaworks.algafood.domain.service.EmissaoPedidoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,8 +38,8 @@ public class PedidoController {
 
 
     @GetMapping
-    public List<PedidoResumoModelOutput> listar() {
-        List<Pedido> todosPedidos = pedidoRepository.findAll();
+    public List<PedidoResumoModelOutput> pesquisar(PedidoFilter pedidoFilter) {
+        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(pedidoFilter));
 
         return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
     }
