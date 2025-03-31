@@ -13,6 +13,9 @@ import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +34,22 @@ public class CozinhaController {
     private CozinhaModelAssembler cozinhaModelAssembler;
     private CozinhaInputDesassembler cozinhaInputDesassembler;
 
-    @GetMapping
+    /*@GetMapping
     public List<CozinhaModelOutput> listar() {
-        return cozinhaModelAssembler.toCollectionModel(cozinhaRepository.findAll());
+        List<Cozinha> todasCozinhas = cozinhaRepository.findAll();
+        return cozinhaModelAssembler.toCollectionModel(todasCozinhas);
         //return cozinhaRepository.findAll();
+    }*/
+
+    //Exemplo de um listar com paginação
+    @GetMapping
+    public Page<CozinhaModelOutput> listar(Pageable pageable) {
+        Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
+
+        List<CozinhaModelOutput> cozinhasModelOutput = cozinhaModelAssembler.toCollectionModel(cozinhasPage.getContent());
+
+        Page<CozinhaModelOutput> cozinhasModelPage = new PageImpl<>(cozinhasModelOutput, pageable, cozinhasPage.getTotalElements());
+        return cozinhasModelPage;
     }
 
     @GetMapping("/{cozinhaId}")

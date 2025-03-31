@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface CozinhaRepository extends JpaRepository<Cozinha, Long> {
     //List<Cozinha> findPesquisaExataByNome(String nome);
+    //Page<Cozinha> findTodasByNomeContaining(String nome, Pageable pageble); Caso eu precise adicionar paginação em algum metodo implementado pelo SpringDataJpa
     Optional<Cozinha> findPesquisaExataByNome(String nomeCozinha);
 }
