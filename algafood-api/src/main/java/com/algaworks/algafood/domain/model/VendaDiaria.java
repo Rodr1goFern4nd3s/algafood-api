@@ -5,12 +5,13 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @AllArgsConstructor
 @Data
 public class VendaDiaria {
 
-    private LocalDate data;
+    private Date data;
     private Long totalVendas;
     private BigDecimal totalFaturado;
 }
